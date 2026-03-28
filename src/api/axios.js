@@ -20,7 +20,7 @@ api.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
-    // If error is 403 and we haven't tried refreshing yet
+    // If error is 401 or 403 and haven't tried refreshing yet
     if (
       error.response &&
       (error.response.status === 401 || error.response.status === 403) &&
@@ -31,15 +31,15 @@ api.interceptors.response.use(
 
       if (refreshToken) {
         try {
-          // 1. Call your refresh endpoint
+          // Call the refresh endpoint
           const res = await axios.post("http://localhost:8080/auth/refresh", {
             refreshToken,
           });
 
-          // 2. Save the new access token
+          // Save the new access token
           const newAccessToken = res.data.accessToken;
           localStorage.setItem("accessToken", newAccessToken);
-          // 3. Update the header and retry the original request
+          // Update the header and retry the original request
           originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
           return api(originalRequest); // Retry the original request
         } catch (err) {
