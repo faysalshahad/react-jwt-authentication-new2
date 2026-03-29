@@ -1,34 +1,69 @@
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import api from "../api/axios";
 import { Link } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
+// import { jwtDecode } from "jwt-decode";
 import "../styles/global.css";
 
 export default function Dashboard() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const username = localStorage.getItem("username");
-  const token = localStorage.getItem("accessToken");
+  const userRole = localStorage.getItem("role") || ""; // Get role from local storage
 
-  let userRole = "";
-  if (token) {
-    try {
-      const decoded = jwtDecode(token);
-      userRole = decoded.roles;
-    } catch (error) {
-      console.error("Invalid token:", error);
-    }
-  }
+  // let userRole = "";
+  // if (token) {
+  //   try {
+  //     const decoded = jwtDecode(token);
+  //     userRole = decoded.roles;
+  //   } catch (error) {
+  //     console.error("Invalid token:", error);
+  //   }
+  // }
+
+  // const handleLogout = async () => {
+  //   try {
+  //     await api.post("/logout");
+  //   } finally {
+  //     localStorage.clear();
+  //     navigate("/");
+  //   }
+  // };
 
   const handleLogout = async () => {
     try {
-      await api.post("/logout");
+      // Tell backend to clear cookies
+      await api.post("/auth/logout");
+    } catch (err) {
+      console.error("Logout request failed", err);
     } finally {
-      localStorage.clear();
-      navigate("/");
+      // Always clear UI data and redirect
+      localStorage.removeItem("isLoggedIn");
+      localStorage.removeItem("username");
+      localStorage.removeItem("role");
+
+      // Force a full reload to the login page to clear any memory states
+      window.location.href = "/login";
     }
   };
 
-  const isAdmin = userRole === "ROLE_SUPER_ADMIN" || userRole === "ROLE_ADMIN";
+  // const handleLogout = async () => {
+  //   try {
+  //     // Tell the backend to clear cookies
+  //     await api.post("/auth/logout");
+
+  //     // Clear UI-specific data
+  //     localStorage.removeItem("username");
+
+  //     // Redirect to login
+  //     navigate("/login");
+  //   } catch (err) {
+  //     console.error("Logout failed", err);
+  //     // Even if the request fails, clear local storage and redirect
+  //     localStorage.clear();
+  //     navigate("/login");
+  //   }
+  // };
+
+  const isAdmin = userRole === "SUPER_ADMIN" || userRole === "ADMIN";
 
   return (
     <div className="dashboard-container">
@@ -58,7 +93,10 @@ export default function Dashboard() {
                 <button className="btn-primary">Register New User</button>
               </Link>
               <Link to="/items">
-                <button className="btn-secondary">Manage Items</button>
+                <button className="btn-primary">Manage Items</button>
+              </Link>
+              <Link to="/customers">
+                <button className="btn-primary">Manage Customers</button>
               </Link>
             </div>
           </div>
