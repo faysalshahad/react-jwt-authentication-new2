@@ -1,5 +1,5 @@
 // import { useNavigate } from "react-router-dom";
-import api from "../api/axios";
+// import api from "../api/axios";
 import { Link } from "react-router-dom";
 // import { jwtDecode } from "jwt-decode";
 import "../styles/global.css";
@@ -28,22 +28,22 @@ export default function Dashboard() {
   //   }
   // };
 
-  const handleLogout = async () => {
-    try {
-      // Tell backend to clear cookies
-      await api.post("/auth/logout");
-    } catch (err) {
-      console.error("Logout request failed", err);
-    } finally {
-      // Always clear UI data and redirect
-      localStorage.removeItem("isLoggedIn");
-      localStorage.removeItem("username");
-      localStorage.removeItem("role");
+  // const handleLogout = async () => {
+  //   try {
+  //     // Tell backend to clear cookies
+  //     await api.post("/auth/logout");
+  //   } catch (err) {
+  //     console.error("Logout request failed", err);
+  //   } finally {
+  //     // Always clear UI data and redirect
+  //     localStorage.removeItem("isLoggedIn");
+  //     localStorage.removeItem("username");
+  //     localStorage.removeItem("role");
 
-      // Force a full reload to the login page to clear any memory states
-      window.location.href = "/login";
-    }
-  };
+  //     // Force a full reload to the login page to clear any memory states
+  //     window.location.href = "/login";
+  //   }
+  // };
 
   // const handleLogout = async () => {
   //   try {
@@ -69,9 +69,9 @@ export default function Dashboard() {
     <div className="dashboard-container">
       <header className="dashboard-header">
         <h3>Welcome, {username}!</h3>
-        <button onClick={handleLogout} className="logout-btn">
+        {/* <button onClick={handleLogout} className="logout-btn">
           Logout
-        </button>
+        </button> */}
       </header>
       <main className="dashboard-content">
         <div className="card">

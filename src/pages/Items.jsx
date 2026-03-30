@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import api from "../api/axios";
-import { Link, useNavigate } from "react-router-dom";
+import { Link /*useNavigate*/ } from "react-router-dom";
 import "../styles/global.css";
 
 export default function Items() {
@@ -9,7 +9,7 @@ export default function Items() {
   const [search, setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const fetchItems = async () => {
     try {
@@ -56,7 +56,7 @@ export default function Items() {
 
   return (
     <div className="dashboard-container">
-      <header className="dashboard-header">
+      {/* <header className="dashboard-header">
         <h3>Item Management</h3>
         <div style={{ display: "flex", gap: "10px" }}>
           <Link to="/dashboard">
@@ -72,7 +72,7 @@ export default function Items() {
             Logout
           </button>
         </div>
-      </header>
+      </header> */}
 
       <main className="dashboard-content">
         <div className="card">
