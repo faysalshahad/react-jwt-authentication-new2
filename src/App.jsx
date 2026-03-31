@@ -16,20 +16,20 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
 
-        <Route path="/register" element={<Register />} />
+        {/* <Route path="/register" element={<Register />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/items" element={<Items />} />
         <Route path="/orders" element={<OrderPage />} />
-        <Route path="/customers" element={<CustomerPage />} />
+        <Route path="/customers" element={<CustomerPage />} /> */}
 
         {/* Protected Routes */}
-        {/* <Route element={<ProtectedRoute />}>
+        <Route element={<ProtectedRoute />}>
           <Route path="/register" element={<Register />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/items" element={<Items />} />
           <Route path="/orders" element={<OrderPage />} />
           <Route path="/customers" element={<CustomerPage />} />
-        </Route> */}
+        </Route>
 
         {/* Default redirect */}
         <Route path="*" element={<Login />} />

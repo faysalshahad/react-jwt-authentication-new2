@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import api from "../api/axios";
 import LineItemModal from "./LineItemModal";
+import { Link, useNavigate } from "react-router-dom";
 import "../styles/global.css";
 
 export default function OrderPage() {
@@ -13,6 +14,8 @@ export default function OrderPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeHeaderId, setActiveHeaderId] = useState(null);
   const [editingHeaderId, setEditingHeaderId] = useState(null);
+
+  const navigate = useNavigate();
 
   // --- API Calls ---
   const fetchOrders = async () => {
@@ -89,6 +92,33 @@ export default function OrderPage() {
 
   return (
     <div className="dashboard-container">
+      <header className="dashboard-header">
+        <h2>Customer Management</h2>
+        <div style={{ display: "flex", gap: "10px" }}>
+          <Link to="/dashboard">
+            <button className="btn-secondary">Dashboard</button>
+          </Link>
+          <Link to="/orders">
+            <button className="btn-secondary">Orders</button>
+          </Link>
+          <Link to="/register">
+            <button className="btn-secondary">Register</button>
+          </Link>
+          <Link to="/items">
+            <button className="btn-secondary">Items</button>
+          </Link>
+          <button
+            className="logout-btn"
+            onClick={() => {
+              localStorage.clear();
+              navigate("/");
+            }}
+          >
+            Logout
+          </button>
+        </div>
+      </header>
+
       <div className="dashboard-content">
         {/* CREATE / EDIT SECTION */}
         <div className="card">

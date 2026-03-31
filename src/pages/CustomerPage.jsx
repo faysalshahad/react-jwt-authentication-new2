@@ -1,10 +1,15 @@
 import { useState, useEffect } from "react";
 import api from "../api/axios";
+import { Link, useNavigate } from "react-router-dom";
+import "../styles/global.css";
 
 export default function CustomerPage() {
   const [customers, setCustomers] = useState([]);
   const [search, setSearch] = useState("");
   const [newCustomer, setNewCustomer] = useState({ name: "", address: "" });
+  const [debouncedSearch, setDebouncedSearch] = useState("");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const userRole = localStorage.getItem("role");
   const isAdmin = userRole === "ADMIN" || userRole === "SUPER_ADMIN";
@@ -25,15 +30,28 @@ export default function CustomerPage() {
 
   const handleAddCustomer = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       await api.post("/api/customers", newCustomer);
       setNewCustomer({ name: "", address: "" });
       fetchCustomers();
+      alert("New Customer Details have been created successfully!");
     } catch (err) {
       console.error("Error adding customer", err);
-      alert("Failed to add customer");
+      alert(
+        "Failed to add customer: " + (err.response?.data?.message || "Error"),
+      );
+    } finally {
+      setLoading(false);
     }
   };
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearch(search);
+    }, 500);
+    return () => clearTimeout(handler);
+  }, [search]);
 
   const handleDelete = async (id) => {
     if (window.confirm("Delete this customer?")) {
@@ -42,10 +60,40 @@ export default function CustomerPage() {
     }
   };
 
+  const filteredCustomers = customers.filter(
+    (customer) =>
+      customer.name.toLowerCase().includes(debouncedSearch.toLowerCase()) ||
+      customer.id.toString() === debouncedSearch,
+  );
+
   return (
     <div className="container">
-      <h2>Customer Management</h2>
-
+      <header className="dashboard-header">
+        <h2>Customer Management</h2>
+        <div style={{ display: "flex", gap: "10px" }}>
+          <Link to="/dashboard">
+            <button className="btn-secondary">Dashboard</button>
+          </Link>
+          <Link to="/orders">
+            <button className="btn-secondary">Orders</button>
+          </Link>
+          <Link to="/register">
+            <button className="btn-secondary">Register</button>
+          </Link>
+          <Link to="/register">
+            <button className="btn-secondary">Item</button>
+          </Link>
+          <button
+            className="logout-btn"
+            onClick={() => {
+              localStorage.clear();
+              navigate("/");
+            }}
+          >
+            Logout
+          </button>
+        </div>
+      </header>
       {/* SEARCH BAR */}
       <input
         type="text"
