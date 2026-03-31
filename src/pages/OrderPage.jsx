@@ -21,6 +21,8 @@ export default function OrderPage() {
   const fetchOrders = async () => {
     try {
       const res = await api.get("/api/orders");
+      const data = res.data;
+      console.log(data);
       setOrders(res.data);
     } catch (err) {
       console.error("Failed to fetch orders:", err);
@@ -92,7 +94,7 @@ export default function OrderPage() {
 
   return (
     <div className="dashboard-container">
-      <header className="dashboard-header">
+      {/* <header className="dashboard-header">
         <h2>Customer Management</h2>
         <div style={{ display: "flex", gap: "10px" }}>
           <Link to="/dashboard">
@@ -117,7 +119,7 @@ export default function OrderPage() {
             Logout
           </button>
         </div>
-      </header>
+      </header> */}
 
       <div className="dashboard-content">
         {/* CREATE / EDIT SECTION */}
