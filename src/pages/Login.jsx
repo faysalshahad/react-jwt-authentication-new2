@@ -55,8 +55,7 @@ export default function Login() {
     } finally {
       setLoading(false);
     }
-  };;
-
+  };
 
   return (
     <div className="auth-container">
@@ -87,9 +86,9 @@ export default function Login() {
             {loading ? "Logging in..." : "Login"}
           </button>
         </form>
-        <div className="auth-link">
+        {/* <div className="auth-link">
           Don't have an account? <Link to="/register">Register</Link>
-        </div>
+        </div> */}
       </div>
     </div>
   );
