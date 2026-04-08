@@ -2,6 +2,7 @@ import { useState } from "react";
 import api from "../api/axios";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/auth.css";
+//import { toast } from "react-toastify"; // 1. Import it
 
 export default function Register() {
   const [form, setForm] = useState({
@@ -16,10 +17,23 @@ export default function Register() {
     e.preventDefault();
     setLoading(true);
     try {
+      // 1. Capture the 'res' (response) from the backend
+      // const res = await api.post("/auth/register", form);
+
+      // 2. Use the message from your AuthResponse (res.data.message)
+      // alert(res.data.message);
+      // toast.success(res.data.message); // 2. Nice green toast
+
       await api.post("/auth/register", form);
       alert("User Registered Successfully!");
       navigate("/login");
     } catch (err) {
+      // 3. Capture the error message from your backend catch blocks
+      // This will now show "User already exists" instead of a generic "Failed"
+      // const errorMessage = err.response?.data?.message || "Registration Failed";
+      // alert(errorMessage);
+      // toast.error(msg); // 3. Nice red toast
+
       console.log(err);
       alert("Registration Failed. Are you a Super Admin?");
     } finally {
