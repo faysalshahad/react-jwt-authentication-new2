@@ -17,7 +17,7 @@ export default function LineItemModal({ isOpen, onClose, headerId, onSave }) {
 
   const fetchItems = async () => {
     try {
-      const res = await api.get("/api/items");
+      const res = await api.get("/auth/items");
       setItems(res.data);
     } catch (err) {
       console.error("Failed to fetch items", err);
@@ -45,7 +45,7 @@ export default function LineItemModal({ isOpen, onClose, headerId, onSave }) {
         quantity: parseInt(quantity),
       };
 
-      await api.post(`/api/orders/${headerId}/lines`, lineData);
+      await api.post(`/auth/orders/${headerId}/lines`, lineData);
       setSearch("");
       setSelectedItem(null);
       setQuantity(1);

@@ -20,7 +20,7 @@ export default function OrderPage() {
   // --- API Calls ---
   const fetchOrders = async () => {
     try {
-      const res = await api.get("/api/orders");
+      const res = await api.get("/auth/orders");
       const data = res.data;
       console.log(data);
       setOrders(res.data);
@@ -31,7 +31,7 @@ export default function OrderPage() {
 
   const fetchCustomers = async () => {
     try {
-      const res = await api.get("/api/customers");
+      const res = await api.get("/auth/customers");
       setCustomers(res.data);
     } catch (err) {
       console.error("Failed to fetch customers:", err);
@@ -54,10 +54,10 @@ export default function OrderPage() {
 
     try {
       if (editingHeaderId) {
-        await api.put(`/api/orders/${editingHeaderId}`, payload);
+        await api.put(`/auth/orders/${editingHeaderId}`, payload);
         setEditingHeaderId(null);
       } else {
-        await api.post("/api/orders", payload);
+        await api.post("/auth/orders", payload);
       }
 
       setSelectedCustomer(null);
@@ -77,13 +77,13 @@ export default function OrderPage() {
 
   const handleDeleteHeader = async (id) => {
     if (window.confirm("Delete this order and all its lines?")) {
-      await api.delete(`/api/orders/${id}`);
+      await api.delete(`/auth/orders/${id}`);
       fetchOrders();
     }
   };
 
   const handleDeleteLine = async (lineId) => {
-    await api.delete(`/api/orders/lines/${lineId}`);
+    await api.delete(`/auth/orders/lines/${lineId}`);
     fetchOrders();
   };
 

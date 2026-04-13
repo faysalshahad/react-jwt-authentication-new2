@@ -58,11 +58,18 @@
 
 import axios from "axios";
 
+// const api = axios.create({
+//   baseURL: "http://localhost:8080",
+//   // Optional Does not require in modern Axios
+//   // headers: { "Content-Type": "application/json" },
+//   withCredentials: true, // MANDATORY: This allows cookies to be sent/received
+// });
+
 const api = axios.create({
-  baseURL: "http://localhost:8080",
-  // Optional Does not require in modern Axios
-  // headers: { "Content-Type": "application/json" }, 
-  withCredentials: true, // MANDATORY: This allows cookies to be sent/received
+  baseURL: "http://172.20.1.225:8080", // Use the server's IP
+  //   // Optional Does not require in modern Axios
+  //   // headers: { "Content-Type": "application/json" },
+  withCredentials: true,
 });
 
 // Response Interceptor: Handle Token Refresh automatically
@@ -85,7 +92,8 @@ api.interceptors.response.use(
           to this POST request because withCredentials is true.
         */
         await axios.post(
-          "http://localhost:8080/auth/refresh",
+          // "http://localhost:8080/auth/refresh",
+          "http://172.20.1.225:8080/auth/refresh",
           {},
           { withCredentials: true },
         );
