@@ -17,7 +17,7 @@ export default function CustomerPage() {
   const fetchCustomers = async () => {
     try {
       // Using the debounced value for the API call
-      const res = await api.get("/api/customers?search=${debouncedSearch}");
+      const res = await api.get(`/auth/customers?search=${debouncedSearch}`);
       setCustomers(res.data);
     } catch (err) {
       console.error("Error fetching customers", err);
@@ -41,7 +41,7 @@ export default function CustomerPage() {
     setLoading(true);
     setLoading(true);
     try {
-      await api.post("/api/customers", newCustomer);
+      await api.post("/auth/customers", newCustomer);
       setNewCustomer({ name: "", address: "" });
       fetchCustomers();
       alert("Customer added successfully!");
@@ -63,7 +63,7 @@ export default function CustomerPage() {
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this customer?")) {
       try {
-        await api.delete("/api/customers/${id}");
+        await api.delete(`/auth/customers/${id}`);
         fetchCustomers();
       } catch (err) {
         console.error(err);

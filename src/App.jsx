@@ -5,7 +5,6 @@ import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import Items from "./pages/Items";
 import OrderPage from "./pages/OrderPage";
-import ProtectedRoute from "./components/ProtectedRoute";
 import CustomerPage from "./pages/CustomerPage";
 import Layout from "./components/Layout";
 
@@ -13,16 +12,26 @@ function App() {
   return (
     <Router>
       <Routes>
+        {/* 1. Public Landing Page */}
+        <Route path="/" element={<Home />} />
+
+        {/* 2. Login/Register (No Layout) */}
+        <Route path="/login" element={<Login />} />
+        {/* <Route path="/register" element={<Register />} /> */}
+
+        {/* 3. Protected Dashboard Routes (Wrapped in Layout) */}
         <Route path="/" element={<Layout />}>
+          {/* <Route path="/" element={<Home />} />
+          <Route path="home" element={<Home />} /> */}
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="items" element={<Items />} />
           <Route path="orders" element={<OrderPage />} />
           <Route path="customers" element={<CustomerPage />} />
           <Route path="register" element={<Register />} />
         </Route>
-
         {/* Login/Register usually don't have the main header/footer */}
-        <Route path="/login" element={<Login />} />
+        {/* <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Home />} /> */}
       </Routes>
     </Router>
   );

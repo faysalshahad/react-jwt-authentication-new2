@@ -6,9 +6,21 @@ export default function Header() {
   // Based on your screenshot, 'role' is stored directly as a string in localStorage
   const role = localStorage.getItem("role");
 
-  const handleLogout = () => {
-    localStorage.clear(); // Clears role, username, and isLoggedIn
-    navigate("/login");
+  const handleLogout = async () => {
+    try {
+      // Call the backend logout endpoint
+      // This works because 'api' has withCredentials: true
+      await api.post("/auth/logout");
+      // Clear local storage for UI state
+      localStorage.clear(); // Clears role, username, and isLoggedIn
+      // Move the user to the login page
+      navigate("/login");
+    } catch (error) {
+      console.log("Logout failed: ", error);
+      // Even if the server call fails, we usually want to clear the local state
+      localStorage.clear();
+      navigate("/login");
+    }
   };
 
   const isAdmin = role === "ADMIN" || role === "SUPER_ADMIN";
