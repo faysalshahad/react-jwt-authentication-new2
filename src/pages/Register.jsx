@@ -26,7 +26,7 @@ export default function Register() {
 
       await api.post("/auth/register", form);
       alert("User Registered Successfully!");
-      navigate("/login");
+      navigate("/dashboard");
     } catch (err) {
       // 3. Capture the error message from your backend catch blocks
       // This will now show "User already exists" instead of a generic "Failed"
