@@ -13,7 +13,7 @@ export default function Items() {
 
   const fetchItems = async () => {
     try {
-      const res = await api.get("/api/items");
+      const res = await api.get("/auth/items");
       setItems(res.data);
     } catch (err) {
       console.error("Failed to fetch", err);
